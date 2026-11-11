@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#121212">
+<meta name="description" content="Arpeggio, perfumería en Santo Domingo: perfumes inspirados con su ficha completa. Agrega tus favoritos al carrito y pide por WhatsApp.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="iconos/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Arpeggio">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Catálogo · Arpeggio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;900&family=Bodoni+Moda:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="estilo.css?v=42">
+<style>
+.crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 12px}
+.crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
+.head{background:var(--tint);border:1px solid var(--line);padding:34px 36px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.head h1{font-family:var(--display);font-weight:500;font-size:60px;line-height:1;margin:0}
+.head p{margin:8px 0 0;color:var(--muted);max-width:52ch}
+.gen{display:flex;border:1px solid var(--ink)}
+.gen button{all:unset;cursor:pointer;padding:10px 18px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.gen button+button{border-left:1px solid var(--ink)}
+.gen button.on{background:var(--ink);color:var(--on-ink)}
+
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-top:26px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{all:unset;cursor:pointer;flex:none;padding:12px 16px;font-family:var(--display);font-size:24px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button small{font-family:var(--body);font-size:12px;letter-spacing:.1em;margin-left:6px}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--accent)}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.chip{all:unset;cursor:pointer;border:1px solid var(--line);padding:7px 13px;font-size:13px;color:var(--muted)}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.count{font-size:13px;color:var(--muted);margin:10px 0 0}
+
+/* Marcas de la sección, cada una con su letra: se tocan para ver solo sus perfumes */
+.marcas{margin-top:22px}
+.marcas .lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.marcas .lab span{letter-spacing:.08em;text-transform:none}
+.marcas .franja{padding:0 26px}
+.marcas .franja-r{gap:10px;padding:2px}
+.mca{all:unset;cursor:pointer;flex:none;box-sizing:border-box;min-width:150px;height:84px;padding:0 20px;border:1px solid var(--line);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center}
+.mca b{font-size:21px;font-weight:500;line-height:1.1;white-space:nowrap}
+.mca b.m-esp,.mca b.m-neg{font-size:15px}
+.mca b.m-esp{font-weight:300}.mca b.m-neg{font-weight:600}.mca b.m-did{font-weight:400}
+.mca small{font-family:var(--body);font-style:normal;font-weight:400;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mca:hover{border-color:var(--ink)}
+.mca.on{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.mca.on small{color:var(--on-ink-muted)}
+.mca.todas b{font-family:var(--body);font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase}
+
+.group{margin-top:40px}
+.group-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:1px solid var(--ink);padding-bottom:10px;flex-wrap:wrap}
+.group-h h2{font-family:var(--display);font-weight:600;font-size:36px;letter-spacing:.04em;text-transform:uppercase;margin:0;line-height:1}
+.group-h p{margin:0;color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:18px}
+.grid .card{padding:22px 16px 18px}
+.empty{padding:50px 20px;text-align:center;color:var(--muted)}
+
+@media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:700px){
+  .head{padding:24px 18px}
+  .head h1{font-size:42px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid .card{padding:16px 10px 14px}
+  .grid .montar{font-size:11px;letter-spacing:.14em;padding:9px 4px}
+  .tabs button{font-size:20px;padding:10px 12px}
+  .group-h h2{font-size:28px}
+  .marcas .franja{padding:0}.marcas .fl{display:none}
+  .mca{min-width:128px;height:72px;padding:0 14px}.mca b{font-size:18px}.mca b.m-esp,.mca b.m-neg{font-size:13px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="crumbs"><a href="index.html">Inicio</a> / <span id="crumb">Catálogo</span></div>
+  <section class="head">
+    <div>
+      <p class="kick" id="kick">Catálogo</p>
+      <h1 id="titulo">Todo el catálogo</h1>
+      <p id="bajada"></p>
+    </div>
+    <div class="gen" id="gen" role="group" aria-label="Filtrar por género">
+      <button data-g="T">Todos</button><button data-g="M">Ella</button><button data-g="H">Él</button>
+    </div>
+  </section>
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <section class="marcas" id="marcas" hidden>
+    <div class="lab">Marcas<span>Desliza y toca una marca</span></div>
+    <div class="franja" id="franjaMarcas"><div class="franja-r" id="marcasR"></div></div>
+  </section>
+  <div class="chips" id="chips"></div>
+  <p class="count" id="count"></p>
+  <div id="lista"></div>
+</main>
+
+<script src="datos.js?v=34"></script>
+<script src="comun.js?v=49"></script>
+<script>
+const qs=new URLSearchParams(location.search);
+const st={g:['M','H'].includes(qs.get('g'))?qs.get('g'):'T',s:SECCIONES.some(x=>x.id==qs.get('s'))?qs.get('s'):'',f:qs.get('f')||'',m:PERFUMES.some(p=>p[2]==qs.get('m'))?qs.get('m'):''};
+montarPiezas(st.g!='T'?st.g:st.s||'todo');
+
+function pintar(){
+  const q={};if(st.m)q.m=st.m;if(st.g!='T')q.g=st.g;if(st.s)q.s=st.s;if(st.f)q.f=st.f;
+  history.replaceState(null,'',cat(q));
+  // m = marca: viene de la franja "Inspirados en" del inicio.
+  const genero=PERFUMES.filter(p=>(st.g=='T'||p[3]==st.g)&&(!st.m||p[2]==st.m));
+  const sec=st.s?SECCIONES.find(x=>x.id==st.s):null;
+  const gNom={M:'Para Ella',H:'Para Él'}[st.g];
+
+  $('#titulo').textContent=st.m||gNom||(sec?sec.nombre:'Todo el catálogo');
+  $('#kick').textContent=st.m?'Inspirados en':gNom&&sec?'Catálogo · '+sec.nombre:'Catálogo';
+  $('#bajada').innerHTML=st.m?`${genero.length} perfume${genero.length==1?'':'s'} inspirado${genero.length==1?'':'s'} en ${esc(st.m)}${gNom?' · '+gNom:''}. <a href="catalogo.html">Ver todo el catálogo</a>`
+    :esc(sec&&!gNom?sec.desc:gNom?`${genero.length} perfumes, ordenados por diseñador, árabes y nicho.`:`${PERFUMES.length} perfumes de hombre y de mujer.`);
+  $('#crumb').textContent=$('#titulo').textContent;
+  document.title=$('#titulo').textContent+' · Arpeggio';
+  $$('#gen button').forEach(b=>b.classList.toggle('on',b.dataset.g==st.g));
+
+  const tabs=[{id:'',nombre:'Todos',n:genero.length},...SECCIONES.map(x=>({id:x.id,nombre:x.nombre,n:genero.filter(p=>p[6]==x.id).length}))];
+  $('#tabs').innerHTML=tabs.map(t=>`<button role="tab" data-s="${t.id}" class="${t.id==st.s?'on':''}" aria-selected="${t.id==st.s}">${t.nombre}<small>${t.n}</small></button>`).join('');
+
+  // Franja de marcas: las de la sección elegida (o la de la marca que vino del inicio), con su letra.
+  const secM=st.s||(st.m?seccionDe(st.m):'');
+  $('#marcas').hidden=!secM;
+  if(secM){
+    const n={};PERFUMES.filter(p=>(st.g=='T'||p[3]==st.g)&&p[6]==secM).forEach(p=>n[p[2]]=(n[p[2]]||0)+1);
+    const marcas=Object.keys(n).sort((a,b)=>n[b]-n[a]||a.localeCompare(b));
+    const total=marcas.reduce((t,m)=>t+n[m],0);
+    $('#marcas .lab').firstChild.textContent=`Marcas · ${SECCIONES.find(x=>x.id==secM).nombre} (${marcas.length})`;
+    $('#marcasR').innerHTML=`<button class="mca todas ${!st.m?'on':''}" data-m=""><b>Todas</b><small>${total} perfumes</small></button>`
+      +marcas.map(m=>`<button class="mca ${m==st.m?'on':''}" data-m="${esc(m)}"><b class="notranslate m-${estiloMarca(m)}">${esc(m)}</b><small>${n[m]} perfume${n[m]==1?'':'s'}</small></button>`).join('');
+    const on=$('#marcasR .on');if(on&&st.m){const r=$('#marcasR');r.scrollLeft=on.offsetLeft-r.clientWidth/2+on.offsetWidth/2}
+  }
+
+  const enSec=genero.filter(p=>!st.s||p[6]==st.s);
+  const fams=[...new Set(enSec.map(p=>p[4]))];
+  if(st.f&&!fams.includes(st.f))st.f='';
+  $('#chips').innerHTML=[`<button class="chip ${!st.f?'on':''}" data-f="">Todas las familias</button>`,...fams.map(f=>`<button class="chip ${f==st.f?'on':''}" data-f="${esc(f)}">${esc(f)}</button>`)].join('');
+
+  const lista=enSec.filter(p=>!st.f||p[4]==st.f);
+  $('#count').textContent=`${lista.length} perfume${lista.length==1?'':'s'}`;
+  const grupos=(st.s?[sec]:SECCIONES).map(x=>({x,items:lista.filter(p=>p[6]==x.id)})).filter(g=>g.items.length);
+  $('#lista').innerHTML=grupos.length?grupos.map(({x,items})=>`<section class="group" id="sec-${x.id}">
+      <div class="group-h"><h2>${x.nombre}</h2><p>${x.desc} · ${items.length}</p></div>
+      <div class="grid">${items.map(p=>card(p[0])).join('')}</div></section>`).join('')
+    :`<div class="empty">No hay perfumes con ese filtro.</div>`;
+  pintarConcho();
+}
+$('#gen').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.g=b.dataset.g;pintar()};
+$('#tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.s=b.dataset.s;st.f='';st.m='';pintar()};
+$('#marcasR').onclick=e=>{const b=e.target.closest('.mca');if(!b)return;if(!st.s&&st.m)st.s=seccionDe(st.m);st.m=b.dataset.m==st.m?'':b.dataset.m;st.f='';pintar()};
+franja($('#franjaMarcas'));
+$('#chips').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.f=b.dataset.f;pintar()};
+pintar();
+</script>
+</body>
+</html>
