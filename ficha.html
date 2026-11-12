@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#121212">
 <meta name="description" content="Arpeggio, perfumería en Santo Domingo: perfumes inspirados con su ficha completa. Agrega tus favoritos al carrito y pide por WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Arpeggio · Perfumería">
+<meta property="og:locale" content="es_DO">
+<meta property="og:title" content="Arpeggio · Perfumería">
+<meta property="og:description" content="Más de 380 perfumes inspirados en los grandes, cada uno con su ficha completa. Agrega tus favoritos al carrito y pide por WhatsApp en Santo Domingo.">
+<meta property="og:image" content="https://arpeggioperfumeria.github.io/iconos/compartir.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Frascos de perfume Arpeggio de 30 ml">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="iconos/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
@@ -117,7 +127,7 @@
 
 <script src="datos.js?v=34"></script>
 <script src="fichas.js?v=34"></script>
-<script src="comun.js?v=49"></script>
+<script src="comun.js?v=50"></script>
 <script>
 const c=new URLSearchParams(location.search).get('c');
 const p=BY[c];
@@ -137,7 +147,24 @@ const sec=SECCIONES.find(s=>s.id==p[6]);
 const gNom=genero=='H'?'Para Él':'Para Ella';
 const consulta=`Hola, quiero pedir el perfume ${c}, inspirado en ${p[1]} de ${p[2]}. ¿Está disponible?`;
 
-document.title=`${p[1]} · Arpeggio`;
+// Para Google y para compartir: título, descripción, enlace y datos de producto propios de este perfume.
+// (La calificación de la ficha es de la fragancia original, por eso no va en los datos de producto.)
+(()=>{
+  const SITIO='https://arpeggioperfumeria.github.io/',url=SITIO+ficha(c);
+  const nombre=`Perfume inspirado en ${p[1]} de ${p[2]}`;
+  const texto=`${nombre}, 30 ml por ${rd(PRECIOS[30][0])}. ${d&&d.desc?d.desc:'Pídelo por WhatsApp en Santo Domingo.'}`;
+  const corto=texto.length>160?texto.slice(0,157).replace(/\s+\S*$/,'')+'…':texto;
+  const foto=p[5]?`${SITIO}img/${c}.webp`:SITIO+'iconos/compartir.jpg';
+  const pon=(sel,v)=>{const m=document.head.querySelector(sel);if(m)m.setAttribute('content',v)};
+  document.title=`${p[1]} de ${p[2]}, inspirado · Arpeggio`;
+  pon('meta[name="description"]',corto);pon('meta[property="og:title"]',`${nombre} · Arpeggio`);pon('meta[property="og:description"]',corto);
+  document.head.insertAdjacentHTML('beforeend',`<link rel="canonical" href="${url}"><meta property="og:url" content="${url}">`);
+  const ld=document.createElement('script');ld.type='application/ld+json';
+  ld.textContent=JSON.stringify({'@context':'https://schema.org','@type':'Product',name:nombre,sku:c,category:p[4],description:texto,image:foto,
+    brand:{'@type':'Brand',name:'Arpeggio'},
+    offers:Object.keys(PRECIOS).map(ml=>({'@type':'Offer',name:`${ml} ml`,price:PRECIOS[ml][0],priceCurrency:'DOP',availability:'https://schema.org/InStock',url}))});
+  document.head.appendChild(ld);
+})();
 $('#crumbs').innerHTML=`<a href="index.html">Inicio</a> / <a href="${cat({g:genero})}">${gNom}</a> / <a href="${cat({g:genero,s:sec.id})}">${sec.nombre}</a> / ${esc(p[1])}`;
 $('#pos').textContent=`${i+1} / ${lista.length}`;
 
