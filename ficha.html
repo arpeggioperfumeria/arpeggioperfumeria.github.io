@@ -175,7 +175,7 @@ let html=`<div class="fhero">
     <div class="titulo"><h1 class="notranslate">${esc(p[1])}</h1><div class="acciones"><button class="montar add-top" data-icono data-code="${c}" data-off="Agregar" data-on="En tu carrito ✓" aria-label="Agregar ${esc(p[1])} a tu carrito"></button><a class="wa-btn wa-top" href="${waLink(consulta)}" target="_blank" rel="noopener">${WAICON} Consultar por WhatsApp</a><a class="frasco-link" href="frascos.html">También puedes escoger el frasco →</a></div></div>
     <div class="tags"><span class="tag ${genero=='H'?'h':'m'}">${genero=='H'?'Hombre':'Mujer'}</span><span class="tag f">${esc(p[4])}</span><span class="tag f">${sec.nombre}</span></div>
     <p class="label" style="margin:10px 0 0">Inspirado en ${esc(p[1])} · ${esc(p[2])}</p>
-    <div class="compra"><p class="pr" data-precio="${c}">${precioHTML(mlDe(c))}</p><span class="lanz">Precio de lanzamiento</span>
+    <div class="compra"><p class="pr" data-precio="${c}">${precioHTML(mlDe(c))}</p>${PRECIOS[mlDe(c)][1]>PRECIOS[mlDe(c)][0]?`<span class="lanz">Precio de lanzamiento</span>`:''}
       <div class="tamano">${[30,10].map(ml=>`<button data-tam="${c}" data-ml="${ml}">${ml} ml</button>`).join('')}</div></div>
     ${d&&d.desc?`<p class="desc">${esc(d.desc)}</p>`:''}
   </div>

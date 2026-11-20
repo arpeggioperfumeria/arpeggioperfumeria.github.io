@@ -32,7 +32,7 @@ const PAGOS=`<span class="pago" title="Mastercard"><svg viewBox="0 0 64 40" widt
 <span class="pago" title="Visa"><svg viewBox="0 0 64 40" width="54" height="34" aria-label="Visa"><text x="32" y="27" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-style="italic" font-size="20" fill="#1a1f71">VISA</text></svg></span>`;
 // Precio por tamaño en ml: [precio de lanzamiento, precio regular].
 // Cuando termine el lanzamiento, pon el regular en los dos y desaparece el tachado.
-const PRECIOS={30:[800,1000],10:[400,500]};
+const PRECIOS={30:[1000,1000],10:[500,500]};
 const rd=n=>'RD$'+n.toLocaleString('en-US');
 const precioHTML=ml=>{const [p,r]=PRECIOS[ml];return `<span class="precio">${rd(p)}</span>${r>p?` <s class="regular">${rd(r)}</s>`:''}`};
 const AVISO='Perfume inspirado. No es un producto original ni tenemos relación con la marca mencionada.';
